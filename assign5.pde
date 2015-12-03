@@ -160,11 +160,6 @@ void draw() {
       indexOne %= width*2;
       indexTwo %= width*2;
 
-      //text
-      textSize(28);
-      fill(200);
-      text("Score: " + newScore, 15, 460);  
-
       //jet moving
        if (upPressed) 
          jetY -= speed;
@@ -454,6 +449,11 @@ void draw() {
       noStroke();
       rect(6, y, hpWeightX, hpWeightY);
       image(hpBar, x, y);
+      
+      //text
+      textSize(28);
+      fill(200);
+      text("Score: " + newScore, 15, 460);  
       
       //game lose
       
