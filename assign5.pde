@@ -1,4 +1,8 @@
-/* the latest version edited in 2015/12/3 8:30PM */ 
+/* 
+the latest version 
+edited in 2015/12/3 9:03PM
+completed C class requirement
+*/ 
 
   final int GAME_START = 0;
   final int GAME_RUN = 1;
@@ -18,11 +22,14 @@
   float spacingX = 80, spacingY = 50;
   float indexOne, indexTwo;
   float treasureDist;
-  float [] enemyDistX = new float[8];
-  float [] bulletDist = new float[8];
+  //float [] enemyDistX = new float[8];
+  //float [] bulletDist = new float[8];
   float [][] enemyP1 = new float [5][2];
   float [][] enemyP2 = new float [5][2];
   float [][] enemyP3 = new float [8][2];
+  
+  //text setting
+  int newScore = 0;
   
   //flame
   int flamesNum = 0;
@@ -50,7 +57,6 @@
   boolean enterPressed = false;
   
   //loading image
-  //PImage [] enemy = new PImage [5];
   PImage enemy, jet, hpBar, treasure, bgOne, bgTwo, end, endHover, start, startHover, bullet; 
   
   
@@ -146,7 +152,6 @@ void draw() {
       break;
       
     case GAME_RUN:
-    
       //infinite looping background
       image(bgOne, indexOne - width, 0);
       image(bgTwo, indexTwo - width, 0);
@@ -154,6 +159,11 @@ void draw() {
       indexTwo++;
       indexOne %= width*2;
       indexTwo %= width*2;
+
+      //text
+      textSize(28);
+      fill(200);
+      text("Score: " + newScore, 10, 460);  
 
       //jet moving
        if (upPressed) 
@@ -212,6 +222,7 @@ void draw() {
             flamePos[q][0] = enemyP1[i][0];
             flamePos[q][1] = enemyP1[i][1];
           }
+          newScore = addScore(20);
           enemyP1[i][0] = -9999;
           enemyP1[i][1] = enemyY = floor(random(40,219));
           isShoot[i] = false;
@@ -273,6 +284,7 @@ void draw() {
               flamePos[q][0] = enemyP2[i][0];
               flamePos[q][1] = enemyP2[i][1];
             }
+            newScore = addScore(20);
             enemyP2[i][0] = -9999;
             enemyP2[i][1] = enemyY = floor(random(40,219));
             isShoot[i] = false;
@@ -355,6 +367,7 @@ void draw() {
               flamePos[q][0] = enemyP3[i][0];
               flamePos[q][1] = enemyP3[i][1];
             }
+            newScore = addScore(20);
             enemyP3[i][0] = -9999;
             enemyP3[i][1] = enemyY = floor(random(40,219));
             isShoot[i] = false;
@@ -455,7 +468,8 @@ void draw() {
       
       //reset enemy part 1 position
       enemyPart = PART1;
-      enemyY = floor(random(40, 219));    
+      enemyY = floor(random(40, 219));  
+      
       for (int i = 0; i < 5; i++){
         enemyP1 [i][0] = -500 + spacingX*i;
         enemyP1 [i][1] = enemyY; 
@@ -464,6 +478,7 @@ void draw() {
         isShoot[i] = false;
       }
       
+      newScore = 0;
       hpWeightX = percentage * 20;
       jetX = 580;
       jetY = 240;
@@ -551,4 +566,8 @@ void keyReleased(){
      }  
     } 
   }
+}
+
+int addScore (int value){
+  return(newScore + value);
 }
