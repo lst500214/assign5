@@ -1,10 +1,8 @@
 /* 
-the latest version 
-edited in 2015/12/3 9:24PM
-completed C class requirement
+the latest version  
+edited in 2015/12/3 10:43PM
+completed B class requirement
 */ 
-
-/* the latest version edited in 2015/12/2 10:30PM */ 
 
   final int GAME_START = 0;
   final int GAME_RUN = 1;
@@ -194,8 +192,7 @@ void draw() {
         enemyP1[i][0] += speed;
         
         //enemy touched jet
-        if(jetX >= enemyP1[i][0]-51 && jetX <= enemyP1[i][0] + 61 
-          && jetY >= enemyP1[i][1] - 51 && jetY <= enemyP1[i][1] + 61){
+        if(isHit(enemyP1[i][0], enemyP1[i][1], 61, 61, jetX, jetY, 51, 51) == true){
           for(int q=0; q<5; q++){
             flamePos[q][0] = enemyP1[i][0];
             flamePos[q][1] = enemyP1[i][1];
@@ -207,9 +204,8 @@ void draw() {
         }
         
         //bullet shooting enemy
-        if(bulletPos[i][0] >= enemyP1[i][0]-51 && bulletPos[i][0] <= enemyP1[i][0] + 61 
-          && bulletPos[i][1] >= enemyP1[i][1] - 51 && bulletPos[i][1] <= enemyP1[i][1] + 61){
-          if(isShoot[i] == true){
+        if(isHit(bulletPos[i][0], bulletPos[i][1], 31, 27, enemyP1[i][0], enemyP1[i][1], 61, 61) == true){
+          {
             for(int q=0; q<5; q++){
               flamePos[q][0] = enemyP1[i][0];
               flamePos[q][1] = enemyP1[i][1];
@@ -226,7 +222,7 @@ void draw() {
           enemyY = random(40, 219);
           for(int y=0; y<5; y++){
             int lineCount = 4-y;
-            enemyP2[y][0] = -500 + spacingX*y;
+            enemyP2[y][0] = -500 + spacingX * y;
             enemyP2[y][1] = enemyY + spacingY*lineCount;
           }
           enemyPart = PART2;
@@ -236,7 +232,7 @@ void draw() {
           enemyY = random(40, 219);
           for(int y=0; y<5; y++){
             int lineCount = 4-y;
-            enemyP2[y][0] = -51 + (-spacingX) * y;
+            enemyP2[y][0] = -500 + spacingX * y;
             enemyP2[y][1] = enemyY + spacingY*lineCount;
           }
           enemyPart = PART2;
@@ -254,8 +250,7 @@ void draw() {
         enemyP2[i][0] += speed;
         
         //enemy touched jet
-        if(jetX >= enemyP2[i][0]-51 && jetX <= enemyP2[i][0] + 61 
-          && jetY >= enemyP2[i][1] - 51 && jetY <= enemyP2[i][1] + 61){
+        if(isHit(enemyP2[i][0], enemyP2[i][1], 61, 61, jetX, jetY, 51, 51) == true){
           for(int q = 0; q < 5; q++){
             flamePos[q][0] = enemyP2[i][0];
             flamePos[q][1] = enemyP2[i][1];
@@ -265,8 +260,7 @@ void draw() {
         }
         
         //bullet shooting enemy
-        if(bulletPos[i][0] >= enemyP2[i][0]-51 && bulletPos[i][0] <= enemyP2[i][0] + 61 
-          && bulletPos[i][1] >= enemyP2[i][1] - 51 && bulletPos[i][1] <= enemyP2[i][1] + 61){
+        if(isHit(bulletPos[i][0], bulletPos[i][1], 31, 27, enemyP2[i][0], enemyP2[i][1], 61, 61) == true){
           if(isShoot[i] == true){
             for(int q=0; q<5; q++){
               flamePos[q][0] = enemyP2[i][0];
@@ -304,7 +298,7 @@ void draw() {
          enemyY = random(40, 219);
          for(int y=0; y<8; y++){
            int count = abs(2-y); 
-           if(y<5){
+           if(y < 5){
              enemyP3[y][0] = -500 + spacingX*y;
              enemyP3[y][1] = enemyY+spacingY*count;
            }
@@ -330,8 +324,7 @@ void draw() {
         enemyP3[i][0] += speed;
     
       //enemy touched jet
-      if(jetX >= enemyP3[i][0]-51 && jetX <= enemyP3[i][0] + 61 
-          && jetY >= enemyP3[i][1] - 51 && jetY <= enemyP3[i][1] + 61){
+      if(isHit(enemyP3[i][0], enemyP3[i][1], 61, 61, jetX, jetY, 51, 51) == true){
         for(int q = 0 ; q < 8 ; q++){
           flamePos[q][0] = enemyP3[i][0];
           flamePos[q][1] = enemyP3[i][1];
@@ -341,8 +334,7 @@ void draw() {
       }
       
        //bullet shooting enemy
-        if(bulletPos[i][0] >= enemyP3[i][0]-51 && bulletPos[i][0] <= enemyP3[i][0] + 61 
-          && bulletPos[i][1] >= enemyP3[i][1] - 51 && bulletPos[i][1] <= enemyP3[i][1] + 61){
+        if(isHit(bulletPos[i][0], bulletPos[i][1], 31, 27, enemyP3[i][0], enemyP3[i][1], 61, 61) == true){
           if(isShoot[i] == true){
             for(int q = 0; q < 8; q ++){
               flamePos[q][0] = enemyP3[i][0];
@@ -377,11 +369,11 @@ void draw() {
        }
       }
        
-      break;}
+      break;
+    }
       
       //shooting bullet
-      
-     for(int i = 0; i < isShoot.length; i++){
+      for(int i = 0; i < isShoot.length; i++){
        if(isShoot[i] == true){
          image(bullet, bulletPos[i][0], bulletPos[i][1]);
          bulletPos[i][0] -= 4;
@@ -410,8 +402,8 @@ void draw() {
       }
       
       //treasure detection
-      treasureDist = dist(jetX, jetY, treasureX, treasureY);
-      if (treasureDist <= 41){
+      //treasureDist = dist(jetX, jetY, treasureX, treasureY);
+      if (isHit(treasureX, treasureY, 41, 41, jetX, jetY, 51, 51) == true){
         hpWeightX += (percentage*10); //hp bar up 10 point
         
         //set HP bar maximus 
@@ -430,11 +422,11 @@ void draw() {
       image(jet, jetX, jetY);
       
       //HP bar
-      scale(1,1);
       fill(#FF0000);
       noStroke();
       rect(6, y, hpWeightX, hpWeightY);
       image(hpBar, x, y);
+      println(hpWeightX);
       
       //game lose
       
@@ -548,4 +540,11 @@ void keyReleased(){
 
 int scoreChange (int value){
   return(newScore + value);
+}
+
+boolean isHit (float ax, float ay, float aw, float ah, float bx, float by, float bw, float bh){
+  if(bx+bw >= ax && ax + aw >= bx && by + bh >= ay && ay + ah >= by){
+    return true;  
+  }
+  return false; 
 }
