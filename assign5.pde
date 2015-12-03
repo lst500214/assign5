@@ -161,9 +161,9 @@ void draw() {
       indexTwo %= width*2;
 
       //text
-      //textSize(28);
-      //fill(200);
-      //text("Score: " + newScore, 15, 460);  
+      textSize(28);
+      fill(200);
+      text("Score: " + newScore, 15, 460);  
 
       //jet moving
        if (upPressed) 
