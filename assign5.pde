@@ -1,6 +1,6 @@
 /* 
 the latest version 
-edited in 2015/12/3 9:03PM
+edited in 2015/12/3 9:07PM
 completed C class requirement
 */ 
 
@@ -163,7 +163,7 @@ void draw() {
       //text
       textSize(28);
       fill(200);
-      text("Score: " + newScore, 10, 460);  
+      text("Score: " + newScore, 15, 460);  
 
       //jet moving
        if (upPressed) 
@@ -222,7 +222,7 @@ void draw() {
             flamePos[q][0] = enemyP1[i][0];
             flamePos[q][1] = enemyP1[i][1];
           }
-          newScore = addScore(20);
+          newScore = scoreChange(20);
           enemyP1[i][0] = -9999;
           enemyP1[i][1] = enemyY = floor(random(40,219));
           isShoot[i] = false;
@@ -284,7 +284,7 @@ void draw() {
               flamePos[q][0] = enemyP2[i][0];
               flamePos[q][1] = enemyP2[i][1];
             }
-            newScore = addScore(20);
+            newScore = scoreChange(20);
             enemyP2[i][0] = -9999;
             enemyP2[i][1] = enemyY = floor(random(40,219));
             isShoot[i] = false;
@@ -367,7 +367,7 @@ void draw() {
               flamePos[q][0] = enemyP3[i][0];
               flamePos[q][1] = enemyP3[i][1];
             }
-            newScore = addScore(20);
+            newScore = scoreChange(20);
             enemyP3[i][0] = -9999;
             enemyP3[i][1] = enemyY = floor(random(40,219));
             isShoot[i] = false;
@@ -568,6 +568,6 @@ void keyReleased(){
   }
 }
 
-int addScore (int value){
+int scoreChange (int value){
   return(newScore + value);
 }
