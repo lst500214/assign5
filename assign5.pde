@@ -426,10 +426,8 @@ void draw() {
       noStroke();
       rect(6, y, hpWeightX, hpWeightY);
       image(hpBar, x, y);
-      println(hpWeightX);
       
       //game lose
-      
       if (hpWeightX <= 0){
         gameState = GAME_LOSE;
       }
