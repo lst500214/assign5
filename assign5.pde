@@ -1,6 +1,6 @@
 /* 
 the latest version  
-edited in 2015/12/13 10:00PM
+edited in 2015/12/13 10:07PM
 fix HP bar display bug
 */ 
 
@@ -283,7 +283,7 @@ void draw() {
              enemyP3[k][1] = enemyY+spacingY*count;
            }
           
-           if(y k= 5 && k < 8){
+           if(k >= 5 && k < 8){
              enemyP3[k][0] = -500 + spacingX*(k-4);
              enemyP3[5][1] = enemyY+spacingY*3;
              enemyP3[6][1] = enemyY+spacingY*4;
