@@ -1,7 +1,7 @@
 /* 
 the latest version  
-edited in 2015/12/3 10:43PM
-completed B class requirement
+edited in 2015/12/13 10:00PM
+fix HP bar display bug
 */ 
 
   final int GAME_START = 0;
@@ -220,20 +220,20 @@ void draw() {
         
         if(enemyP1[i][0] > width+550){
           enemyY = random(40, 219);
-          for(int y=0; y<5; y++){
-            int lineCount = 4-y;
-            enemyP2[y][0] = -500 + spacingX * y;
-            enemyP2[y][1] = enemyY + spacingY*lineCount;
+          for(int k=0; k<5; k++){
+            int lineCount = 4-k;
+            enemyP2[k][0] = -500 + spacingX * k;
+            enemyP2[k][1] = enemyY + spacingY*lineCount;
           }
           enemyPart = PART2;
         } 
     
         if(enemyP1[0][0]<=-1000 && enemyP1[1][0]<=-1000 && enemyP1[2][0]<=-1000 && enemyP1[3][0]<=-1000 && enemyP1[4][0]<=-1000){
           enemyY = random(40, 219);
-          for(int y=0; y<5; y++){
-            int lineCount = 4-y;
-            enemyP2[y][0] = -500 + spacingX * y;
-            enemyP2[y][1] = enemyY + spacingY*lineCount;
+          for(int k=0; k<5; k++){
+            int lineCount = 4-k;
+            enemyP2[k][0] = -500 + spacingX * k;
+            enemyP2[k][1] = enemyY + spacingY*lineCount;
           }
           enemyPart = PART2;
         }
@@ -276,15 +276,15 @@ void draw() {
           
        if(enemyP2[i][0] > width+550){
          enemyY = random(40, 219);
-         for(int y=0; y<8; y++){
-           int count = abs(2-y); 
-           if(y<5){
-             enemyP3[y][0] = -500 + spacingX*y;
-             enemyP3[y][1] = enemyY+spacingY*count;
+         for(int k=0; k<8; k++){
+           int count = abs(2-k); 
+           if(k<5){
+             enemyP3[k][0] = -500 + spacingX*k;
+             enemyP3[k][1] = enemyY+spacingY*count;
            }
           
-           if(y >= 5 && y < 8){
-             enemyP3[y][0] = -500 + spacingX*(y-4);
+           if(y k= 5 && k < 8){
+             enemyP3[k][0] = -500 + spacingX*(k-4);
              enemyP3[5][1] = enemyY+spacingY*3;
              enemyP3[6][1] = enemyY+spacingY*4;
              enemyP3[7][1] = enemyY+spacingY*3;
@@ -296,15 +296,15 @@ void draw() {
     
        if(enemyP2[1][0]<=-1000 && enemyP2[1][0]<=-1000 && enemyP2[2][0]<=-1000 && enemyP2[3][0]<=-1000 && enemyP2[4][0]<=-1000){
          enemyY = random(40, 219);
-         for(int y=0; y<8; y++){
-           int count = abs(2-y); 
-           if(y < 5){
-             enemyP3[y][0] = -500 + spacingX*y;
-             enemyP3[y][1] = enemyY+spacingY*count;
+         for(int k=0; k<8; k++){
+           int count = abs(2-k); 
+           if(k < 5){
+             enemyP3[k][0] = -500 + spacingX*k;
+             enemyP3[k][1] = enemyY+spacingY*count;
            }
           
-           if(y >= 5 && y < 8){
-             enemyP3[y][0] = -500 + spacingX*(y-4);
+           if(k >= 5 && k < 8){
+             enemyP3[k][0] = -500 + spacingX*(k-4);
              enemyP3[5][1] = enemyY+spacingY*3;
              enemyP3[6][1] = enemyY+spacingY*4;
              enemyP3[7][1] = enemyY+spacingY*3;
