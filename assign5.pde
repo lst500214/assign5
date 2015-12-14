@@ -1,7 +1,7 @@
 /* 
 the latest version  
-edited in 2015/12/13 10:07PM
-fix HP bar display bug
+edited in 2015/12/14 15:15
+fixing shooting detect bug 
 */ 
 
   final int GAME_START = 0;
@@ -44,6 +44,7 @@ fix HP bar display bug
   
   //shooting
   int bulletCount = 0;
+  int index1, index2;
   float [][] bulletPos = new float [8][2];
   boolean [] isShoot = new boolean[5];
   
@@ -112,7 +113,7 @@ void setup () {
   enemyPart = PART1;
   enemyY = floor(random(40, 219));    
   for (int i = 0; i < 5; i++){
-   enemyP1 [i][0] = -51 + (-spacingX)*i;
+   enemyP1 [i][0] = -500 + spacingX*i;
    enemyP1 [i][1] = enemyY; 
   }
   
@@ -147,6 +148,7 @@ void draw() {
             }
           }
         }
+        
       break;
       
     case GAME_RUN:
@@ -187,37 +189,50 @@ void draw() {
       enemySwitch = false;
       
       //part 1: a line of 5 enemys 
-      for(int i=0; i<5; i++){
+      for (int i=0; i<5; i++){
+        
         image(enemy, enemyP1[i][0], enemyP1[i][1]);
         enemyP1[i][0] += speed;
         
         //enemy touched jet
-        if(isHit(enemyP1[i][0], enemyP1[i][1], 61, 61, jetX, jetY, 51, 51) == true){
+        if(isHit(enemyP1[i][0], enemyP1[i][1], 61, 61, jetX, jetY, 51, 51)){
           for(int q=0; q<5; q++){
-            flamePos[q][0] = enemyP1[i][0];
-            flamePos[q][1] = enemyP1[i][1];
+            flamePos [q][0] = enemyP1[i][0];
+            flamePos [q][1] = enemyP1[i][1];
           }
-          hpWeightX = hpWeightX - percentage*20;
           enemyP1[i][0] = -9999;
           enemyP1[i][1] = floor(random(40,219));
+          hpWeightX = hpWeightX - percentage*20;
           flamesNum = 0;
         }
         
         //bullet shooting enemy
-        if(isHit(bulletPos[i][0], bulletPos[i][1], 31, 27, enemyP1[i][0], enemyP1[i][1], 61, 61) == true){
-          {
-            for(int q=0; q<5; q++){
-              flamePos[q][0] = enemyP1[i][0];
-              flamePos[q][1] = enemyP1[i][1];
+        for(int a = 0; a < 5; a++){
+          closestEnemyP1(int(bulletPos[a][0]), int(bulletPos[a][1]));
+          
+          if(enemyP1[a][0]>0){
+            if(index1 != -1 && enemyP1[index1][0] < bulletPos[i][0]){
+              if(enemyP1[index1][1] > bulletPos[i][1]){
+                bulletPos[i][1] += 3;
+              }else if(enemyP1[index1][1] < bulletPos[i][1]){
+                bulletPos[i][1] -= 3;
+              }  
             }
+          }
+          
+          if(isHit(bulletPos[a][0], bulletPos[a][1], 31, 27, enemyP1[i][0], enemyP1[i][1], 61, 61) && isShoot[i] == true ){
+          for(int q=0; q<5; q++){
+            flamePos[q][0] = enemyP1[i][0];
+            flamePos[q][1] = enemyP1[i][1];
+          }
             newScore = scoreChange(20);
             enemyP1[i][0] = -9999;
             enemyP1[i][1] = enemyY = floor(random(40,219));
-            isShoot[i] = false;
             flamesNum = 0;
+            isShoot[a] = false;
           }
         }
-        
+      
         if(enemyP1[i][0] > width+550){
           enemyY = random(40, 219);
           for(int k=0; k<5; k++){
@@ -250,7 +265,7 @@ void draw() {
         enemyP2[i][0] += speed;
         
         //enemy touched jet
-        if(isHit(enemyP2[i][0], enemyP2[i][1], 61, 61, jetX, jetY, 51, 51) == true){
+        if(isHit(enemyP2[i][0], enemyP2[i][1], 61, 61, jetX, jetY, 51, 51)){
           for(int q = 0; q < 5; q++){
             flamePos[q][0] = enemyP2[i][0];
             flamePos[q][1] = enemyP2[i][1];
@@ -260,19 +275,34 @@ void draw() {
         }
         
         //bullet shooting enemy
-        if(isHit(bulletPos[i][0], bulletPos[i][1], 31, 27, enemyP2[i][0], enemyP2[i][1], 61, 61) == true){
-          if(isShoot[i] == true){
-            for(int q=0; q<5; q++){
-              flamePos[q][0] = enemyP2[i][0];
-              flamePos[q][1] = enemyP2[i][1];
+        
+        for(int a = 0; a < 5; a++){
+        closestEnemyP2(int(bulletPos[a][0]), int(bulletPos[a][1]));
+        
+        if(enemyP2[a][0] > 0){
+          if(index1 != -1 && enemyP2[index1][0] < bulletPos[i][0]){
+              if(enemyP2[index1][1] > bulletPos[i][1]){
+                bulletPos[i][1] += 3;
+               }else if(enemyP2[index1][1] < bulletPos[i][1]){
+                bulletPos[i][1] -= 3;
+               }  
             }
+          }
+         
+         if(isHit(bulletPos[a][0], bulletPos[a][1], 31, 27, enemyP2[i][0], enemyP2[i][1], 61, 61) && isShoot[a] == true){
+           for(int q=0; q<5; q++){
+             flamePos[q][0] = enemyP2[i][0];
+             flamePos[q][1] = enemyP2[i][1];
+           }
               newScore = scoreChange(20);
               enemyP2[i][0] = -9999;
               enemyP2[i][1] = enemyY = floor(random(40,219));
-              isShoot[i] = false;
               flamesNum = 0;
-          }
+              isShoot[a] = false;
+          } 
         }
+        
+        
           
        if(enemyP2[i][0] > width+550){
          enemyY = random(40, 219);
@@ -334,19 +364,34 @@ void draw() {
       }
       
        //bullet shooting enemy
-        if(isHit(bulletPos[i][0], bulletPos[i][1], 31, 27, enemyP3[i][0], enemyP3[i][1], 61, 61) == true){
-          if(isShoot[i] == true){
-            for(int q = 0; q < 8; q ++){
-              flamePos[q][0] = enemyP3[i][0];
-              flamePos[q][1] = enemyP3[i][1];
-            }
-            newScore = scoreChange(20);
-            enemyP3[i][0] = -9999;
-            enemyP3[i][1] = enemyY = floor(random(40,219));
-            isShoot[i] = false;
-            flamesNum = 0;
+       
+       for(int a = 0; a < 5; a++){
+        
+         closestEnemyP3(int(bulletPos[a][0]), int(bulletPos[a][1]));
+         if(enemyP3[i][0] > 0){
+           if(index2 != -1 && enemyP3[index2][0] < bulletPos[a][0]){
+             if(enemyP3[index2][1] > bulletPos[a][1]){
+               bulletPos[a][1] += 3;
+             }else if(enemyP3[index2][1] < bulletPos[i][1]){
+               bulletPos[a][1] -= 3;
+             }  
+           }
+         }
+         
+        if(isHit(bulletPos[i][0], bulletPos[i][1], 31, 27, enemyP3[i][0], enemyP3[i][1], 61, 61) && isShoot[a] == true){
+          for(int q = 0; q < 8; q ++){
+            flamePos[q][0] = enemyP3[i][0];
+            flamePos[q][1] = enemyP3[i][1];
           }
-        }
+          newScore = scoreChange(20);
+          enemyP3[i][0] = -9999;
+          enemyP3[i][1] = enemyY = floor(random(40,219));
+          flamesNum = 0;
+          isShoot[a] = false;
+        } 
+       }
+        
+        
       
        if(enemyP3[i][0] > width+550){
          enemyY = random(40, 219); 
@@ -362,7 +407,7 @@ void draw() {
        
           enemyY = random(40, 219); 
           for (int j = 0; j < 5; j++){
-            enemyP1 [i][0] = -51 + (-spacingX)*j;
+            enemyP1 [i][0] = -500 + spacingX*i;
             enemyP1 [j][1] = enemyY; 
           }
           enemyPart = PART1;
@@ -372,7 +417,7 @@ void draw() {
       break;
     }
       
-      //shooting bullet
+      //bullet shooting limit
       for(int i = 0; i < isShoot.length; i++){
        if(isShoot[i] == true){
          image(bullet, bulletPos[i][0], bulletPos[i][1]);
@@ -523,15 +568,15 @@ void keyReleased(){
   //shooting bullet when press sapce bar
   if (keyCode == ' '){
     if(gameState == GAME_RUN){
-       if(isShoot[bulletCount] == false){
-         isShoot[bulletCount] = true;
-         bulletPos[bulletCount][0] = jetX - 10;
-         bulletPos[bulletCount][1] = jetY + 12;
-         bulletCount ++ ;
-       }
-     if(bulletCount > 4){
-       bulletCount = 0;
-     }  
+      if(isShoot[bulletCount] == false){
+        isShoot[bulletCount] = true;
+        bulletPos[bulletCount][0] = jetX - 10;
+        bulletPos[bulletCount][1] = jetY + 12;
+        bulletCount ++ ;
+      }
+      if(bulletCount > 4){
+        bulletCount = 0;
+      }  
     } 
   }
 }
@@ -546,3 +591,57 @@ boolean isHit (float ax, float ay, float aw, float ah, float bx, float by, float
   }
   return false; 
 }
+
+
+//get closet enemy position
+int closestEnemyP1 (int x1, int x2){
+  float enemyDist = 600;
+  if ( enemyP1[0][0] > width){
+    index1 = -1;
+  }else{
+    for (int i = 0; i < 5; i++){
+      if(enemyP1[i][0] != -1){
+        if( dist(enemyP1[i][0], enemyP1[i][1], x1, x2) < enemyDist){
+          enemyDist = dist(enemyP1[i][0], enemyP1[i][1], x1, x2);
+          index1 = i;
+        }
+      }
+    }
+  }
+  return index1;
+}
+
+int closestEnemyP2 (int x1, int x2){
+  float enemyDist = 600;
+  if ( enemyP2[0][0] > width) {
+    index1 = -1;
+  }else{    
+    for (int i = 0; i < 5; i++){
+      if(enemyP2[i][0] != -1){
+        if( dist(enemyP2[i][0], enemyP2[i][1], x1, x2) < enemyDist){
+          enemyDist = dist(enemyP2[i][0], enemyP2[i][1], x1, x2);
+          index1 = i;
+        }
+      }
+    }
+  }
+  return index1;
+}
+
+int closestEnemyP3 (int x1, int x2){
+  float enemyDist = 600;
+  if ( enemyP3[0][0] > width) {
+    index2 = -1;
+  }else{ 
+    for (int i = 0; i < 8; i++){
+      if(enemyP3[i][0] != -1){
+        if( dist(enemyP3[i][0], enemyP3[i][1], x1, x2) < enemyDist){
+          enemyDist = dist(enemyP3[i][0], enemyP3[i][1], x1, x2);
+          index2 = i;
+        }
+      }
+    }  
+  }return index2;
+}
+
+  
